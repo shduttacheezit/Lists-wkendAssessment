@@ -37,14 +37,15 @@ def long_words(words):
         >>> long_words(["all", "are", "tiny"])
         []
     """
+    # make empty list 
     longwordlist = []
 
     for word in words: 
-        if len(word) > 4: #if length of worth is greater than 4, should append to empty list
+        #if length of worth is greater than 4, should append to empty list
+        if len(word) > 4: 
             longwordlist.append(word)
         else: 
             continue
-    
 
     return longwordlist
 
@@ -63,16 +64,18 @@ def n_long_words(words, n):
         >>> n_long_words(["I", "like", "apples", "bananas", "you"], 5)
         ['apples', 'bananas']
     """
+    # empty list to append long words to 
+    longwordlist_n = [] 
 
-    nlongwordlist = [] # empty list to append long words to 
+    # if length of word is greater than n, then append
 
     for word in words: 
         if len(word) > n: 
-            nlongwordlist.append(word)
+            longwordlist_n.append(word)
         else:
             continue
 
-    return nlongwordlist
+    return longwordlist_n
 
 
 def smallest_int(numbers):
@@ -94,22 +97,24 @@ def smallest_int(numbers):
         True
     """
 
+    #DID NOT WORK: 
     # sortedints = []
     # sortednums = sorted(numbers)
     # minint = sortednums[0]
-    #attempted to use sorting(numbers) -- did not work. 
-
+    # attempted to use sorting(numbers) 
     # return [s for s in numbers if all(s<=i for i in numbers][0]
 
     # sortedint = [None]
-
     # sortednums = sorted(numbers)
-
     # sortedint = sortednums[0]
 
 
-
-    # return sortedint
+    #DID NOT WORK BECAUSE NOT RETURNING EMPTY LIST AS 'None'
+    smallest = []
+    for num in numbers: 
+        if num < smallest:
+            smallest = num 
+    return smallest 
 
 
 def largest_int(numbers):
@@ -132,12 +137,16 @@ def largest_int(numbers):
     """
 
     # sortint = [None]
-
     # sortednums = sorted(numbers)
     # sortedint = sortednums[-1]
-
-
     # return sortedint
+
+    #This code above does not work for an empty list returning None
+    largest = numbers[0]
+    for num in numbers: 
+        if num > largest: 
+            largest = num 
+    return largest
 
 
 def halvesies(numbers):
@@ -155,9 +164,10 @@ def halvesies(numbers):
         [0.5, 2.5]
     """
 
-   
-
     halflist = []
+
+    # divide every number in list by 2
+    #float type to ensure decimal point included
 
     for num in numbers: 
         halflist.append(float(num)/2)
@@ -174,6 +184,10 @@ def word_lengths(words):
     """
 
     lengthofwords = []
+
+    #loop through word 
+    #find length of each word
+    #append length of word to list 
 
     for word in words: 
         num = len(word)
@@ -200,6 +214,8 @@ def sum_numbers(numbers):
     """
 
     #attemped to use reduce(lambda x,y: x+y, numbers) which didn't work because x and y were not defined. 
+
+    #for every number, continued to add to total 
 
     total = 0 
     for i in numbers: 
@@ -228,7 +244,8 @@ def mult_numbers(numbers):
         1
     """
 
-    total = 1 # because list must be  at least 1 if the product is 0 
+    total = 1 
+    # because list must be at least 1 if the product is 0 
 
     for i in numbers: 
         total *= i 
@@ -255,10 +272,13 @@ def join_strings(words):
     """
     joined = ''
 
+    #loop through every word
+    #concatenate each word 
+
     for word in words: 
         joined += word
 
-
+ 
     return joined
 
 
@@ -282,7 +302,9 @@ def average(numbers):
     a feel free to provide a good solution here.)
     """
 
-    #I think there might be 
+    # average = sum divided by total numbers added
+    # sumints will be 0 if list is empty
+    # floating type variables so exact average given 
 
     sumints = 0
     for i in numbers: 
@@ -310,8 +332,7 @@ def join_strings_with_comma(words):
     """
 
 
-
-    return ""
+    return ', '.join(map(str, words))
 
 
 def reverse_list(items):
@@ -337,16 +358,20 @@ def reverse_list(items):
         ['apple', 'berry', 'cherry']
     """
 
-    # length = len(items)
+    length = len(items)
+    s = length
 
-    # reversedlist = []
+    reversedlist = [None]*s
 
-    # for i in range(0, length/2):
-    #     length = length - 1
-    #     reversedlist.append(items[-1])
+    # loop each item 
+    # in each loop, subtract length by 1 and implement that index to i 
+    # puts each item in items at end of list 
 
-    # return reversedlist
+    for i in items:
+        s = s - 1
+        reversedlist[s] = i
 
+    return reversedlist
 
 
 
@@ -373,8 +398,15 @@ def reverse_list_in_place(items):
         ['I', 'love', 'cookies']
     """
 
-    return []
-
+    length = len(items)
+    index = length - 1    # start from last index 
+    iterations = length/2    #  iterates loop half times the length of list
+    for i in range(0, iterations):
+        temp = items[index]      # placeholder variable
+        items[index] = items[i]
+        items[i] = temp
+        index = index - 1
+    
 
 def duplicates(items):
     """Return list of words from input list which were duplicates.
@@ -399,11 +431,17 @@ def duplicates(items):
         ['apple']
 
         >>> orig
-        ['apple', 'apple', 'berry']
+        ['apple', 'apple', 'berry'] 
     """
+    seen = set()
+    duplicates = set(item for item in items if item in seen or seen.add(item))
 
-    return []
+    # for item in items: 
+    #     if item not in seen:
+    #         duplicates.append(item)
+    #         seen.add(item)
 
+    return list(duplicates)
 
 def find_letter_indices(words, letter):
     """Return list of indices where letter appears in each word.
@@ -433,6 +471,9 @@ def find_letter_indices(words, letter):
     """
     indices = []
 
+    # loop through words
+    # look for the letter in the word
+    # if letter is present in word, return index of the word
 
     for word in words: 
         if letter in word: 

@@ -94,12 +94,11 @@ def foods_in_common(foods1, foods2):
         []
 
     """
+    commonfoods = set(food for food in foods1 if food in foods2)
+    commonfoods = sorted(commonfoods)
 
-    # commonfoods = []
 
-    # foods1 = 
-
-    # return commonfoods
+    return list(commonfoods)
 
 
 def every_other_item(items):
@@ -151,13 +150,12 @@ def largest_n_items(items, n):
 
     largestitems = []
 
-    length = len(items)
+    smalltolargeitems = sorted(items)
 
-    length - 2
-
-    for item in items: 
-        if item is 
-
+    if n == 0: 
+        largestitems = []
+    else: 
+        largestitems = smalltolargeitems[-n:]
 
     return largestitems
 
